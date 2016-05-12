@@ -1,15 +1,18 @@
-//
-//  ProductTableViewCell.swift
-//  TabBar
-//
-//  Created by Gaurav k on 5/11/16.
-//  Copyright © 2016 Gaurav k. All rights reserved.
-//
-
 import UIKit
 
 class ProductTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var price: UILabel!
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var productImg: UIImageView!
+    
+    @IBAction func addToCartClicked(sender: UIButton) {
+        addToCartAction?()
+    }
+    
+    var addToCartAction: (() -> Void)?
+
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -17,8 +20,6 @@ class ProductTableViewCell: UITableViewCell {
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
-
 }

@@ -1,15 +1,9 @@
-//
-//  CartTableViewCellForTotalCost.swift
-//  TabBar
-//
-//  Created by Gaurav k on 5/11/16.
-//  Copyright © 2016 Gaurav k. All rights reserved.
-//
-
 import UIKit
 
 class CartTableViewCellForTotalCost: UITableViewCell {
 
+    @IBOutlet weak var totalCost: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

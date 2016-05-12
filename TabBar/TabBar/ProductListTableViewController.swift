@@ -1,14 +1,21 @@
-//
-//  ProductListTableViewController.swift
-//  TabBar
-//
-//  Created by Gaurav k on 5/11/16.
-//  Copyright © 2016 Gaurav k. All rights reserved.
-//
-
 import UIKit
 
+protocol CartConsumer {
+    func updateCart(product: BagProduct)
+}
+
 class ProductListTableViewController: UITableViewController {
+    var cartConsumer: CartConsumer?
+    
+    let bags = [
+        BagProduct(name: "Skyway", price: "1020", image: UIImage(named: "Haiku")),
+        BagProduct(name: "Perlina", price: "3060", image: UIImage(named: "Perlina")),
+        BagProduct(name: "American Tourister", price: "2050", image: UIImage(named: "AT")),
+        BagProduct(name: "Go Travel", price: "4010", image: UIImage(named: "Haiku")),
+        BagProduct(name: "Haiku", price: "2070", image: UIImage(named: "Haiku")),
+        ]
+    
+    var clickedBags:[BagProduct] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,29 +31,40 @@ class ProductListTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print(indexPath.row)
+    }
 
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return bags.count
     }
-
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCellWithIdentifier("ProductTableViewCell", forIndexPath: indexPath) as! ProductTableViewCell
+        
+        let bag = bags[indexPath.row] as BagProduct
+        
+        cell.addToCartAction = {
+            self.cartConsumer?.updateCart(bag)
+        }
+        
+        cell.name.text = bag.name
+        cell.price.text = bag.price
+//        cell.imageView?.image = bag.image
+        
         return cell
     }
-    */
-
+    
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

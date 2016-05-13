@@ -60,7 +60,7 @@ class ProductListTableViewController: UITableViewController {
         cell.name.text = bag.name
         cell.price.text = bag.price
 //        cell.imageView?.image = bag.image
-        
+
         return cell
     }
     

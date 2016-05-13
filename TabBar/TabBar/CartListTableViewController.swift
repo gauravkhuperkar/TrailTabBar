@@ -1,9 +1,7 @@
 import UIKit
 
-
 class CartListTableViewController: UITableViewController, CartConsumer {
 
-    
     var bagsInCart: [BagProduct] = []
     
     func updateCart(product: BagProduct) {
@@ -13,17 +11,10 @@ class CartListTableViewController: UITableViewController, CartConsumer {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
@@ -35,36 +26,29 @@ class CartListTableViewController: UITableViewController, CartConsumer {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return bagsInCart.count
+        return section == 0 ? bagsInCart.count : 1
     }
 
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if bagsInCart.count > 0 && indexPath.section == 1 {
+        
+        if indexPath.section == 1 {
+ 
             let cell = tableView.dequeueReusableCellWithIdentifier("CartTableViewCellForTotalCost", forIndexPath: indexPath) as! CartTableViewCellForTotalCost
-            
             cell.totalCost.text = calculateTotalCost();
-            
             return cell
             
         } else {
             
             let cell = tableView.dequeueReusableCellWithIdentifier("CartlTableViewCell", forIndexPath: indexPath) as! CartlTableViewCell
-            
             let bag = bagsInCart[indexPath.row]
             
             // Configure the cell...
             cell.name.text = bag.name
             cell.price.text = bag.price
-            //        cell.imageView?.image = bag.image
-            tabBarController?.tabBar.items![1].badgeValue = String(bagsInCart.count)
-            
-            
+//            cell.imageView?.image = bag.image
+//            tabBarController?.tabBar.items![1].badgeValue = String(bagsInCart.count)
             return cell
         }
-        
-        
-       
     }
     
 
@@ -116,7 +100,11 @@ class CartListTableViewController: UITableViewController, CartConsumer {
     // private functions
     
     private func calculateTotalCost() -> String {
-        return "Rs. 240"
+        var totalPrice = 0
+        for bags in bagsInCart {
+            totalPrice += Int(bags.price)!
+        }
+        return "Rs " + String(totalPrice)
     }
 
 }
